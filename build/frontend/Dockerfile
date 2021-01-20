@@ -4,6 +4,10 @@
 # Linux distribution. how small? how about 5Mb?
 # in comparison ubuntu 18.04 is about 1.8Gb
 FROM node:alpine as build
+
+ENV REACT_APP_STATIC=false
+ENV REACT_APP_API=http://localhost:38381/c19-alpha/0.0.1
+
 # Add node-gyp dependencies
 RUN apk add python2 make g++ curl
 # set working directory
