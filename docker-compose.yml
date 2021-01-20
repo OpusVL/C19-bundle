@@ -1,0 +1,67 @@
+version: '3.2'
+
+services:
+  frontend:
+    build: build/frontend
+    # image: frontend:latest
+    environment:
+      REACT_APP_STATIC_COVID: ${REACT_APP_STATIC_COVID:-true}
+      # REACT_APP_STATIC: ${REACT_APP_STATIC:-false}
+      REACT_APP_API: ${REACT_APP_API:-http://localhost:38381/c19-alpha/0.0.1}
+    ports:
+      - "${PORTBASE?REQUIRED}80:80"
+    depends_on:
+      - middleware
+    restart: unless-stopped
+    healthcheck: 
+      test: [ "CMD", "curl", "http://localhost" ]
+      interval: "60s"
+      timeout: "5s"
+      start_period: "5s"
+      retries: 3
+
+  middleware:
+    build: build/middleware
+    ports:
+      - "${PORTBASE?REQUIRED}81:18080"
+    depends_on:
+      - ehrbase
+    restart: unless-stopped
+    healthcheck: 
+      test: [ "CMD", "curl", "http://localhost:18080" ]
+      interval: "60s"
+      timeout: "5s"
+      start_period: "5s"
+      retries: 3
+
+  ehrbase:
+    image: ehrbase/ehrbase:next
+    ports:
+      - ${PORTBASE?REQUIRED}82:8080
+    environment:
+      DB_URL: jdbc:postgresql://ehrdb:5432/ehrbase
+      DB_USER: ehrbase
+      DB_PASS: ehrbase
+    restart: unless-stopped
+    depends_on:
+      - ehrdb
+
+  ehrdb:
+    image: ehrbase/ehrbase-postgres:latest
+    # No need to be available externally to the container
+    # ports:
+    #   - 5432:5432
+    volumes:
+      - "${CONTAINER_VOLUME?REQUIRED}/${SERIAL?REQUIRED}/postgres:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?REQUIRED}
+      EHRBASE_USER: ${EHRBASE_USER:-ehrbase}
+      EHRBASE_PASSWORD: ${EHRBASE_PASSWORD?REQUIRED}
+    restart: unless-stopped
+    healthcheck: 
+      test: [ "CMD", "pg_isready", "-h", "localhost", "-d", "ehrbase" ]
+      interval: "60s"
+      timeout: "5s"
+      start_period: "5s"
+      retries: 3
