@@ -1,5 +1,11 @@
 # EHRBase with Middleware and C19 front end
 
+This project includes git submodules. Ensure you clone it recursively.
+
+```shell
+git clone --recurse-submodules git@github.com:OpusVL/C19-bundle.git
+```
+
 ## Environment Variables
 
 Copy the `.env.example` file to `.env` and modify as necessary.
