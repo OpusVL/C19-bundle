@@ -15,11 +15,6 @@ WORKDIR /app
 # package.json to install the packages from 
 # and yarn.lock for a package called chokidar 
 # which is used for hot reloading
-# COPY package.json /app/package.json
-# COPY yarn.lock /app/yarn.lock
-# COPY public /app/public
-# COPY src /app/src
-# COPY tsconfig.json /app/tsconfig.json
 
 COPY care-protect-ui /app
 
@@ -38,16 +33,11 @@ ENV NODE_ENV=production
 
 COPY --from=build /app/build /usr/share/nginx/html/
 
-# remove default nginx configuration file
-RUN rm /etc/nginx/conf.d/default.conf
 # replace with custom one
-COPY nginx.conf /etc/nginx/conf.d
-
-# COPY inject.template.js /usr/share/nginx/html/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY nginx-entrypoint.sh /
 
 EXPOSE 80
 
-# CMD ["nginx", "-g", "daemon off;"]
 ENTRYPOINT [ "sh", "/nginx-entrypoint.sh" ]

@@ -8,8 +8,6 @@ function render_template() {
   eval "echo \"$(cat $1)\""
 }
 
-#envsubst < "${INJECT_FILE_SRC}" > "${INJECT_FILE_DST}"
-
 if [ -f "${INJECT_FILE_SRC}" ]; then
     render_template "${INJECT_FILE_SRC}" > "${INJECT_FILE_DST}"
     echo "Environment variable file written"

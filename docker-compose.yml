@@ -5,9 +5,9 @@ services:
     build: build/frontend
     # image: frontend:latest
     environment:
-      REACT_APP_STATIC_COVID: ${REACT_APP_STATIC_COVID:-true}
-      # REACT_APP_STATIC: ${REACT_APP_STATIC:-false}
-      REACT_APP_API: ${REACT_APP_API:-http://localhost:38381/c19-alpha/0.0.1}
+      REACT_APP_STATIC_COVID: ${REACT_APP_STATIC_COVID:-false}
+      REACT_APP_STATIC: ${REACT_APP_STATIC:-false}
+      REACT_APP_API: ${APP_URL:-http://localhost}:${PORTBASE?REQUIRED}81/c19-alpha/0.0.1
     ports:
       - "${PORTBASE?REQUIRED}80:80"
     depends_on:
