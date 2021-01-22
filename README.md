@@ -24,6 +24,12 @@ PostgreSQL data folder located at `${CONTAINER_VOLUME}/${SERIAL}/postgres` or `/
 
 Available at [http://localhost:38380](http://localhost:38380)
 
+### Environment Variables
+
+To get these into a static node.js environment you need to inject them into a javascript file at runtime. I based the `Dockerfile` and `nginx-entrypoint.sh` script on the work shown here: [https://medium.com/@jans.tuomi/how-to-use-environment-variables-in-a-built-frontend-application-in-an-nginx-container-c7a90c011ec2](https://medium.com/@jans.tuomi/how-to-use-environment-variables-in-a-built-frontend-application-in-an-nginx-container-c7a90c011ec2)
+
+I chose not to include the gettext package and used a simple `render_template` funtion I use in bash for this kind of thing.
+
 ## Middleware
 
 Available at [http://localhost:38381](http://localhost:38381)

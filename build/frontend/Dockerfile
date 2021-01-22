@@ -5,9 +5,6 @@
 # in comparison ubuntu 18.04 is about 1.8Gb
 FROM node:alpine as build
 
-ENV REACT_APP_STATIC=false
-ENV REACT_APP_API=http://localhost:38381/c19-alpha/0.0.1
-
 # Add node-gyp dependencies
 RUN apk add python2 make g++ curl
 # set working directory
@@ -37,6 +34,8 @@ RUN yarn && yarn build
 
 FROM nginx:alpine
 
+ENV NODE_ENV=production
+
 COPY --from=build /app/build /usr/share/nginx/html/
 
 # remove default nginx configuration file
@@ -44,5 +43,11 @@ RUN rm /etc/nginx/conf.d/default.conf
 # replace with custom one
 COPY nginx.conf /etc/nginx/conf.d
 
+# COPY inject.template.js /usr/share/nginx/html/
+
+COPY nginx-entrypoint.sh /
+
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT [ "sh", "/nginx-entrypoint.sh" ]
