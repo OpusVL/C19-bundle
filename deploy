@@ -1,0 +1,67 @@
+#!/bin/bash
+
+PROGNAME=$(basename $0)
+RELEASE="Revision 1.0.6"
+AUTHOR="(c) 2020 Paul Bargewell (paul.bargewell@opusvl.com)"
+LICENSE="SPDX-License-Identifier: AGPL-3.0-or-later"
+
+if [[ ! -f ".env" ]]; then
+  echo "ERROR: You need to create a .env file first (see .env.example)."
+  exit 1
+fi
+
+source .env
+
+readonly PYTHON_JINJA2="import os;
+import sys;
+import jinja2;
+from dotenv import load_dotenv;
+reload(sys)
+sys.setdefaultencoding('utf-8')
+load_dotenv(verbose=True)
+sys.stdout.write(
+    jinja2.Template
+        (sys.stdin.read()
+    ).render(env=os.environ))"
+
+function render() {
+  if [[ -f "$1" ]]; then
+    echo "Templating: $1"
+    cat "$1" | python -c "${PYTHON_JINJA2}" > `echo "$1" | sed 's/\.template//gi'`
+  else
+    echo "$1 File not found."
+    exit 1
+  fi
+}
+
+# Render the templates first
+
+for t in nginx.template.conf
+do
+  render $t
+done
+
+# Deliver template to Nginx
+
+if [[ -z "${SERIAL}" ]]; then
+  echo "Serial number not defined."
+  exit 1
+fi
+
+SERVER_LIST=${NGINX_SERVERS:-"localhost"}
+
+for SERVER in ${SERVER_LIST}
+do
+  if [[ "${SERVER}" == "localhost" ]]; then
+    sudo cp nginx.conf /etc/nginx/conf.d/${SERIAL}.conf
+    sudo nginx -t && sudo systemctl reload nginx
+  else
+    scp nginx.conf root@${SERVER}:/etc/nginx/conf.d/${SERIAL}.conf
+    ssh root@${SERVER} "sudo nginx -t && sudo systemctl reload nginx"
+  fi
+  if [[ $? -ne 0 ]]; then
+    echo "NGINX: Failure to reload."
+    exit 1
+  fi
+done
+

@@ -2,12 +2,11 @@ version: '3.2'
 
 services:
   frontend:
-    build: build/frontend
-    # image: frontend:latest
+    image: ${FRONTEND_IMAGE:-registry.deploy.opusvl.net/careprotect/care-protect-ui}:${FRONTEND_IMAGE_VERSION:-latest}
     environment:
       REACT_APP_STATIC_COVID: ${REACT_APP_STATIC_COVID:-false}
       REACT_APP_STATIC: ${REACT_APP_STATIC:-false}
-      REACT_APP_API: ${APP_URL:-http://localhost}:${PORTBASE?REQUIRED}81/c19-alpha/0.0.1
+      REACT_APP_API: ${REACT_APP_API:-http://localhost}
     ports:
       - "${PORTBASE?REQUIRED}80:80"
     depends_on:
@@ -17,21 +16,21 @@ services:
       test: [ "CMD", "curl", "http://localhost" ]
       interval: "60s"
       timeout: "5s"
-      start_period: "5s"
       retries: 3
 
   middleware:
-    build: build/middleware
+    image: ${MIDDLEWARE_IMAGE:-registry.deploy.opusvl.net/careprotect/c19app-middleware}:${MIDDLEWARE_IMAGE_VERSION:-latest}
     ports:
       - "${PORTBASE?REQUIRED}81:18080"
     depends_on:
       - ehrbase
+    environment:
+      FRONTEND_HOSTNAME: ${FRONTEND_HOSTNAME}
     restart: unless-stopped
     healthcheck: 
       test: [ "CMD", "curl", "http://localhost:18080" ]
       interval: "60s"
       timeout: "5s"
-      start_period: "5s"
       retries: 3
 
   ehrbase:
@@ -43,6 +42,8 @@ services:
       DB_USER: ehrbase
       DB_PASS: ehrbase
     restart: unless-stopped
+    ports:
+      - "${PORTBASE?REQUIRED}82:80"
     depends_on:
       - ehrdb
 
@@ -63,5 +64,4 @@ services:
       test: [ "CMD", "pg_isready", "-h", "localhost", "-d", "ehrbase" ]
       interval: "60s"
       timeout: "5s"
-      start_period: "5s"
       retries: 3

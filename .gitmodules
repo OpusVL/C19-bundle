@@ -1,6 +1,0 @@
-[submodule "build/frontend/care-protect-ui"]
-	path = build/frontend/care-protect-ui
-	url = https://github.com/AppertaFoundation/care-protect-ui.git
-[submodule "build/middleware/C19-Prototype-Middleware"]
-	path = build/middleware/C19-Prototype-Middleware
-	url = git@github.com:OpusVL/C19-Prototype-Middleware.git
