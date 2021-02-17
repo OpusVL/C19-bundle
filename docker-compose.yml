@@ -25,7 +25,7 @@ services:
     depends_on:
       - ehrbase
     environment:
-      FRONTEND_HOSTNAME: ${FRONTEND_HOSTNAME}
+      FRONTEND_HOSTNAME: ${FRONTEND_HOSTNAME:-localhost}
     restart: unless-stopped
     healthcheck: 
       test: [ "CMD", "curl", "http://localhost:18080" ]
@@ -36,14 +36,14 @@ services:
   ehrbase:
     image: ehrbase/ehrbase:next
     ports:
-      - ${PORTBASE?REQUIRED}82:8080
+      - ${PORTBASE:-383}82:8080
     environment:
       DB_URL: jdbc:postgresql://ehrdb:5432/ehrbase
       DB_USER: ehrbase
       DB_PASS: ehrbase
     restart: unless-stopped
     ports:
-      - "${PORTBASE?REQUIRED}82:80"
+      - "${PORTBASE:-383}82:80"
     depends_on:
       - ehrdb
 
@@ -53,7 +53,7 @@ services:
     # ports:
     #   - 5432:5432
     volumes:
-      - "${CONTAINER_VOLUME?REQUIRED}/${SERIAL?REQUIRED}/postgres:/var/lib/postgresql/data"
+      - "${CONTAINER_VOLUME?REQUIRED}/${SERIAL:-S00382}/postgres:/var/lib/postgresql/data"
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?REQUIRED}
