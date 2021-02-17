@@ -8,17 +8,17 @@ registry.deploy.opusvl.net`. You will need an account prior to doing so
 
 There are several services in this bundle:
 
-* Frontend
-Image: `registry.deploy.opusvl.net/careprotect/care-protect-ui`
+* Frontend  
+Image: `registry.deploy.opusvl.net/careprotect/care-protect-ui`  
 Github: https://github.com/OpusVL/care-protect-ui
-* Middleware
-Image: `registry.deploy.opusvl.net/careprotect/c19app-middleware`
+* Middleware  
+Image: `registry.deploy.opusvl.net/careprotect/c19app-middleware`  
 Github: https://github.com/OpusVL/C19-Prototype-Middleware
-* EHRBase
-Image: `ehrbase/ehrbase`
+* EHRBase  
+Image: `ehrbase/ehrbase`  
 Github: https://github.com/ehrbase/ehrbase
-* EHRDB
-Image: `ehrbase/ehrbase-postgres`
+* EHRDB  
+Image: `ehrbase/ehrbase-postgres`  
 Github:(It is unclear how this is built)
 
 ## Running
@@ -77,47 +77,49 @@ this to `.env` and the values within it will be picked up by the compose file.
 Not every variable has a default. However, there are example values in the
 `.env.example` file. You must provide values for:
 
-; `CONTAINER_VOLUME`
-: Path to a volume for postgres data
-; `POSTGRES_PASSWORD`
-: Password for the EHRDB postgres user
-; `EHRBASE_PASSWORD`
-: Password by which EHRBase connects to postgres, maybe.
+* `CONTAINER_VOLUME`  
+Path to a volume for postgres data
+
+* `POSTGRES_PASSWORD`  
+Password for the EHRDB postgres user
+
+* `EHRBASE_PASSWORD`  
+Password by which EHRBase connects to postgres, maybe.
 
 You can also provide:
 
-; `FRONTEND_IMAGE` - `registry.deploy.opusvl.net/careprotect/care-protect-ui`
-: Changes the frontend image. You can use this so you don't replace your local copy of
+* `FRONTEND_IMAGE` - `registry.deploy.opusvl.net/careprotect/care-protect-ui`  
+Changes the frontend image. You can use this so you don't replace your local copy of
 the image at the OpusVL registry.
-; `FRONTEND_IMAGE_VERSION` - `latest`
-: Sometimes we might upload a tag other than `:latest`, so you can use this to
+* `FRONTEND_IMAGE_VERSION` - `latest`  
+Sometimes we might upload a tag other than `:latest`, so you can use this to
 select a different one.
-; `REACT_APP_STATIC_COVID` - `false`
-: If you set this to `true` then the app will not use the middleware for COVID
+* `REACT_APP_STATIC_COVID` - `false`  
+If you set this to `true` then the app will not use the middleware for COVID
 assesments, but instead use static test data
-; `REACT_APP_STATIC` - `false`
-: If you set this to `true` the app will use static test data for everything,
+* `REACT_APP_STATIC` - `false`  
+If you set this to `true` the app will use static test data for everything,
 bypassing the middleware
-; `REACT_APP_API` - `http://localhost`
-: Here you can set the URL for the middleware. I'm not sure why it doesn't
+* `REACT_APP_API` - `http://localhost`  
+Here you can set the URL for the middleware. I'm not sure why it doesn't
 contain a port.
-; `MIDDLEWARE_IMAGE` - `registry.deploy.opusvl.net/careprotect/c19app-middleware`
-: Changes the middleware image. Use this to avoid overwriting your local copy of
+* `MIDDLEWARE_IMAGE` - `registry.deploy.opusvl.net/careprotect/c19app-middleware`  
+Changes the middleware image. Use this to avoid overwriting your local copy of
 the registry image.
-; `MIDDLEWARE_IMAGE_VERSION` - `latest`
-: Use this if we ever upload a version besides latest, and you want to use it.
-; `FRONTEND_HOSTNAME` - `localhost`
-: The middleware app needs to know the URL that the frontend will be posting
+* `MIDDLEWARE_IMAGE_VERSION` - `latest`  
+Use this if we ever upload a version besides latest, and you want to use it.
+* `FRONTEND_HOSTNAME` - `localhost`  
+The middleware app needs to know the URL that the frontend will be posting
 from, so it can correctly set security cookies and stuff.
-; `PORTBASE` - 383
-: The "base" port for the EHRBase image to run on. The real port will be this
+* `PORTBASE` - 383  
+The "base" port for the EHRBase image to run on. The real port will be this
 and then `82` on the end.
-; `SERIAL` - `S00382`
-: Opus-specific value that should not be a separate variable, but is.
-; `POSTGRES_USER` - `postgres`
-: Postgres user for EHRDB image
-; `EHRBASE_USER` - `ehrbase`
-: Postgres user for EHRBase itself, I guess. As in the user EHRBase will use to
+* `SERIAL` - `S00382`  
+Opus-specific value that should not be a separate variable, but is.
+* `POSTGRES_USER` - `postgres`  
+Postgres user for EHRDB image
+* `EHRBASE_USER` - `ehrbase`  
+Postgres user for EHRBase itself, I guess. As in the user EHRBase will use to
 connect.
 
 ## Deploy Script
