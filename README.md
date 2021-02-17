@@ -31,13 +31,25 @@ the aforementioned registry, so if you are not logged in, it will fail.
 
 ### Running developer images
 
-The images at the registry are created from other repositories, listed above. To
-run a developer version of any image you will need the two pieces of information
-from that list: the image name and the github URL.
+#### Pre-built
+
+If you're lucky we've already built a developer image for you. This will simply
+be tagged, so you can edit your `.env` file to change the appropriate one of
+`FRONTEND_VERSION` or `MIDDLEWARE_VERSION` to select that image. Then re-run
+`docker-compose up -d` to fetch that version and run it.
+
+#### Build-your-own
+
+If the version at the registry doesn't exist or is not bleeding-edge then you
+will have to build your own.
+
+The repositories that created each image are listed above. At this point it is
+recommended that you invent a new image name for that service. Then you can
+build the image with that name, and change the appropriate variable in `.env`.
 
     git clone <github URL>
     cd <new directory>
-    docker build -t <image name> .
+    docker build -t <new image name> .
 
 After the docker build process is complete, you can re-run `docker-compose up
 -d` to rebuild your stack with the newly composed image.
@@ -49,11 +61,12 @@ already built from master. For example, to build the middleware image on the
     git clone https://github.com/OpusVL/C19-Prototype-Middleware
     cd C19-Prototype-Middleware
     git checkout xml-stuff
-    docker build -t registry.deploy.opusvl.net/careprotect/care-protect-ui .
+    docker build -t c19-middleware-dev .
+    ## Now edit .env to say MIDDLEWARE_IMAGE=c19-middleware-dev
 
 Now your docker-compose command will bring up the new image! No guarantees are
-made that the images built this way are functional. That's why the work is on a
-branch.
+made that the images built this way are functional (nor that they will build at
+all). That's why the work is on a branch.
 
 ## Environment variables
 
