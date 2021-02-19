@@ -43,11 +43,8 @@ services:
       DB_USER: ehrbase
       DB_PASS: ehrbase
     restart: unless-stopped
-<<<<<<< HEAD
     ports:
       - "${PORTBASE:-383}82:80"
-=======
->>>>>>> dc1c085... Added ehrbase_url to docker-compose
     depends_on:
       - ehrdb
 
