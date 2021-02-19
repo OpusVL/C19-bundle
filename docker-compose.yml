@@ -26,6 +26,7 @@ services:
       - ehrbase
     environment:
       FRONTEND_HOSTNAME: ${FRONTEND_HOSTNAME:-localhost}
+      EHRBASE_URL: http://ehrbase:8080
     restart: unless-stopped
     healthcheck: 
       test: [ "CMD", "curl", "http://localhost:18080" ]
@@ -42,8 +43,11 @@ services:
       DB_USER: ehrbase
       DB_PASS: ehrbase
     restart: unless-stopped
+<<<<<<< HEAD
     ports:
       - "${PORTBASE:-383}82:80"
+=======
+>>>>>>> dc1c085... Added ehrbase_url to docker-compose
     depends_on:
       - ehrdb
 
