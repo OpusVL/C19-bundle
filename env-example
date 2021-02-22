@@ -1,0 +1,42 @@
+SERIAL=S00382
+PORTBASE=383
+CONTAINER_VOLUME=/home/paul.webster/OpusVL/careprotect/.env/container_volume
+
+# Defaults to localhost, requires sudo and scp if not localhost
+# NGINX_HOST=
+
+# A series on nginx geo ip statements
+# TRUSTED_UP=
+
+# HOST+DOMAIN = url suffix
+HOST=c19
+DOMAIN=devmode.xyz
+
+# Used by middleare
+FRONTEND_HOSTNAME=app.c19.devmode.xyz
+
+# How to tel lthe frontend what the URL is for the middleware
+REACT_APP_API=https://api.c19.devmode.xyz/c19-alpha/0.0.1
+REACT_APP_STATIC_COVID=true
+
+POSTGRES_PASSWORD=RandomKeyOfHappiness
+EHRBASE_PASSWORD=AnotherRandomKeyOfHappiness
+
+SYSTEM_NAME=local.ehrbase.org
+SECURITY_AUTHTYPE=BASIC
+SECURITY_AUTHUSER=ehrbase-user
+SECURITY_AUTHPASSWORD=SuperSecretPassword
+SECURITY_AUTHADMINUSER=ehrbase-admin
+SECURITY_AUTHADMINPASSWORD=EvenMoreSecretPassword
+SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=
+MANAGEMENT_ENDPOINTS_WEB_EXPOSURE=env,health,info,metrics,prometheus
+MANAGEMENT_ENDPOINTS_WEB_BASEPATH=/status
+MANAGEMENT_ENDPOINT_ENV_ENABLED=false
+MANAGEMENT_ENDPOINT_HEALTH_ENABLED=false
+MANAGEMENT_ENDPOINT_HEALTH_DATASOURCE_ENABLED=false
+MANAGEMENT_ENDPOINT_INFO_ENABLED=false
+MANAGEMENT_ENDPOINT_METRICS_ENABLED=false
+MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED=false
+MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED=false
+
+MIDDLEWARE_IMAGE_VERSION=develop
