@@ -43,8 +43,6 @@ services:
       DB_USER: ehrbase
       DB_PASS: ehrbase
     restart: unless-stopped
-    ports:
-      - "${PORTBASE:-383}82:80"
     depends_on:
       - ehrdb
 
