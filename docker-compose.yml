@@ -47,12 +47,12 @@ services:
       - ehrdb
 
   ehrdb:
-    image: ehrbase/ehrbase-postgres:latest
+    image: registry.deploy.opusvl.net/careprotect/ehrbase-postgres:11.11
     # No need to be available externally to the container
     # ports:
     #   - 5432:5432
     volumes:
-      - "${CONTAINER_VOLUME?REQUIRED}/${SERIAL:-S00382}/postgres:/var/lib/postgresql/data"
+      - "${CONTAINER_VOLUME?REQUIRED}/${SERIAL:-S00382}/postgres:/var/lib/postgresql/pgdata"
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?REQUIRED}
