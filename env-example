@@ -1,6 +1,6 @@
 SERIAL=S00382
 PORTBASE=383
-CONTAINER_VOLUME=/home/paul.webster/OpusVL/careprotect/.env/container_volume
+CONTAINER_VOLUME=~/.docker-tmp/c19app/
 
 # Defaults to localhost, requires sudo and scp if not localhost
 # NGINX_HOST=
@@ -19,8 +19,10 @@ FRONTEND_HOSTNAME=app.c19.devmode.xyz
 REACT_APP_API=https://api.c19.devmode.xyz/c19-alpha/0.0.1
 REACT_APP_STATIC_COVID=true
 
-POSTGRES_PASSWORD=RandomKeyOfHappiness
-EHRBASE_PASSWORD=AnotherRandomKeyOfHappiness
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+EHRBASE_USER=ehrbase
+EHRBASE_PASSWORD=ehrbase
 
 SYSTEM_NAME=local.ehrbase.org
 SECURITY_AUTHTYPE=BASIC
