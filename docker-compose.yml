@@ -39,9 +39,9 @@ services:
     ports:
       - ${PORTBASE:-383}82:8080
     environment:
-      DB_URL: jdbc:postgresql://ehrdb:5432/ehrbase
-      DB_USER: ehrbase
-      DB_PASS: ehrbase
+      POSTGRES_PASSWORD: jdbc:postgresql://ehrdb:5432/ehrbase
+      EHRBASE_USER: ${EHRBASE_USER:-ehrbase}
+      EHRBASE_PASSWORD: ${EHRBASE_PASSWORD?REQUIRED}
     restart: unless-stopped
     depends_on:
       - ehrdb
