@@ -1,6 +1,6 @@
 SERIAL=S00382
 PORTBASE=383
-CONTAINER_VOLUME=~/.docker-tmp/c19app/
+CONTAINER_VOLUME=~/.sys/tmp/
 
 # Defaults to localhost, requires sudo and scp if not localhost
 # NGINX_HOST=
@@ -23,6 +23,9 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 EHRBASE_USER=ehrbase
 EHRBASE_PASSWORD=ehrbase
+
+# Default path to the Database 
+DB_URL=jdbc:postgresql://ehrdb/ehrbase
 
 SYSTEM_NAME=local.ehrbase.org
 SECURITY_AUTHTYPE=BASIC
