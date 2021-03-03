@@ -39,28 +39,24 @@ services:
     ports:
       - ${PORTBASE:-383}82:8080
     environment:
-      POSTGRES_PASSWORD: jdbc:postgresql://ehrdb:5432/ehrbase
-      EHRBASE_USER: ${EHRBASE_USER:-ehrbase}
-      EHRBASE_PASSWORD: ${EHRBASE_PASSWORD?REQUIRED}
+      DB_URL: jdbc:postgresql://ehrdb/ehrbase
+      DB_USER: ${EHRBASE_USER:-ehrbase}
+      DB_PASSWORD: ${EHRBASE_PASSWORD?REQUIRED}
     restart: unless-stopped
     depends_on:
       - ehrdb
 
   ehrdb:
-    image: registry.deploy.opusvl.net/careprotect/ehrbase-postgres:11.11
-    # No need to be available externally to the container
-    # ports:
-    #   - 5432:5432
-    volumes:
-      - "${CONTAINER_VOLUME?REQUIRED}/${SERIAL:-S00382}/postgres:/var/lib/postgresql/pgdata"
+    image: ehrbase/ehrbase-postgres:latest
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?REQUIRED}
       EHRBASE_USER: ${EHRBASE_USER:-ehrbase}
       EHRBASE_PASSWORD: ${EHRBASE_PASSWORD?REQUIRED}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?REQUIRED}
     restart: unless-stopped
     healthcheck: 
       test: [ "CMD", "pg_isready", "-h", "localhost", "-d", "ehrbase" ]
       interval: "60s"
       timeout: "5s"
       retries: 3
+
