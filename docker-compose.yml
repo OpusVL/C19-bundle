@@ -7,6 +7,7 @@ services:
       REACT_APP_STATIC_COVID: ${REACT_APP_STATIC_COVID:-false}
       REACT_APP_STATIC: ${REACT_APP_STATIC:-false}
       REACT_APP_API: ${REACT_APP_API:-http://localhost}
+      REACT_APP_STATIC_COVID_CONTROL: ${REACT_APP_STATIC_COVID_CONTROL:-false}
     ports:
       - "${PORTBASE?REQUIRED}80:80"
     depends_on:
